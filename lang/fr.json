@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "games": "Jeux & moteurs",
+    "tools": "Outils",
+    "others": "Mods & bots",
+    "github": "Dépôts GitHub",
+    "links": "Liens"
+  },
+  "hero": {
+    "eyebrow": "journal d'atelier — projets perso",
+    "title": "Xenebia construit ses propres moteurs, mondes et outils.",
+    "lede": "Un atelier de développement solo : moteurs 3D faits main, RPG, outils de speedrun, mods et bots. Tout est du code écrit, cassé, réparé, puis relancé.",
+    "stackLabel": "stack principale :"
+  },
+  "counts": {
+    "games": "04 projets",
+    "tools": "03 projets",
+    "others": "02 projets",
+    "github": "06 dépôts"
+  },
+  "status": {
+    "ongoing": "en cours",
+    "design": "design",
+    "build": "construction",
+    "done": "terminé"
+  },
+  "proj": {
+    "kernelError": {
+      "short": "Moteur FPS 3D entièrement fait main, sans moteur de jeu tiers — construit brique par brique en Python/PyGame/OpenGL.",
+      "detail": "Étendu avec des systèmes de RPG : XP et niveaux, ennemis pilotés par une machine à états avec gestion de vagues, arbre de compétences, et mécaniques de dash / double-saut. Aucun moteur tiers — le rendu 3D, la boucle de jeu et la physique sont écrits à la main."
+    },
+    "rpgPixel": {
+      "short": "Hack'n'slash en pixel art inspiré de la mythologie grecque, distinct de Le Dernier Tic.",
+      "detail": "Erébos, dieu des Ténèbres ressuscité, affronte les Quatre Divinités Primordiales (Gaïa, Tartare, Nyx, Éros) à travers des royaumes en monde ouvert. Système de déplacement en place, combos d'épée à quatre variantes, menu debug avec textures togglables, et pixellisation d'écran paramétrable. Personnage : un petit sorcier/faucheur, silhouette noire à cape liserée de rouge."
+    },
+    "dernierTic": {
+      "short": "RPG steampunk de manipulation du temps, entre les cités de Mécanovie et Horlogia.",
+      "detail": "Quatre pouvoirs confirmés : ralentissement, arrêt du temps, sauts temporels ancrés à un lieu, et rembobinage visuel à la mort. Le menu d'ouverture est déjà prototypé, avec un effet dolly-zoom et une machine à états LOADING → ZOOM → BLACKOUT → DONE pour le fondu au noir."
+    },
+    "godot": {
+      "short": "RPG 3D en fantasy médiévale au rendu cel-shaded, dans l'esprit de Zelda et Leadale.",
+      "detail": "Plusieurs erreurs de scène et de script ont déjà été résolues en cours de route, dont une corruption de World.tscn et des décalages de noms de nœuds."
+    },
+    "leaderboard": {
+      "short": "Synchronisation de classements de speedrun par monde, niveau, sous-niveau et catégorie.",
+      "detail": "Base SQLite locale, avec sélection par monde (Amethyst Ascent, Gusty Glades, Tombstone Tower, Neon Nexus, Challenge Levels), catégorie (Any%, All Leaves, All Berries, Fullberry) et type de données. Prévu : synchronisation intelligente qui vérifie les données déjà présentes avant de télécharger, mode hors ligne, annulation en cours de synchronisation, et mémorisation des derniers paramètres utilisés."
+    },
+    "launcher": {
+      "short": "Interface graphique pour rassembler et lancer tous les projets perso depuis un seul endroit.",
+      "detail": "Chaque projet peut ouvrir son dossier ou se lancer directement, au choix. Doit couvrir dès le départ tous les projets connus : RPG 3D Godot, KERNEL_ERROR, Image Studio, Le Dernier Tic, Leaderboard Sync, mod horror Minecraft, bot WhatsApp."
+    },
+    "imageStudio": {
+      "short": "Éditeur d'images combinant un upscaler par IA et des outils de filtres rétro / pixelisation.",
+      "detail": "Sept modules (main, app, menu, sidebar, filters, upscaler, theme), avec undo/redo, zoom, traitement en arrière-plan pour l'upscaling, et menu natif. Packagé en exécutable Windows via PyInstaller et Inno Setup. Le dépôt GitHub public a son propre README détaillé — voir la section Dépôts GitHub ci-dessous."
+    },
+    "minecraft": {
+      "short": "Mod horror complet avec quête et histoire, sous loader Fabric.",
+      "detail": "Cible la version 1.20.1 plutôt que la dernière version. Thème retenu : une forêt hantée où une entité traque le joueur."
+    },
+    "whatsapp": {
+      "short": "Bot destiné à réagir à des commandes envoyées sur WhatsApp.",
+      "detail": "Construit avec whatsapp-web.js et qrcode-terminal. Structure du projet : botwhatsapp.js, package.json, dossiers .wwebjs_auth / .wwebjs_cache."
+    }
+  },
+  "repo": {
+    "viewLink": "Voir le dépôt",
+    "signalPerdu": {
+      "desc": "Un jeu d'horreur, encore en développement."
+    },
+    "imageStudio": {
+      "lede": "Éditeur d'images desktop — Upscaling IA, filtres rétro et pixelisation, dans un seul outil.",
+      "li1": "Upscaling IA ×2 / ×4 (Real-ESRGAN si disponible, sinon Pillow Lanczos)",
+      "li2": "Pixelisation réglable par slider, rendu en direct",
+      "li3": "7 filtres rétro : Game Boy, Game Boy Pocket, Game Boy Color, NES, SNES, Mega Drive, CRT",
+      "li4": "Rotation, retournement, redimensionnement, zoom sur 11 paliers, plein écran",
+      "li5": "Historique annuler/rétablir (20 états), fichiers récents"
+    },
+    "radarScan": {
+      "lede": "Scanner réseau graphique en Java, à compiler et utiliser dans un cadre légal.",
+      "li1": "Détection des appareils du réseau local (ping IP)",
+      "li2": "Scanner Wi-Fi (SSID + puissance) via commandes système Windows",
+      "li3": "Détection Bluetooth via PowerShell",
+      "li4": "Radar graphique animé avec liste des appareils et leur état"
+    },
+    "tetris": {
+      "lede": "Tetris en Tkinter, 120 FPS et plateau large (12×30).",
+      "li1": "Boucle de rendu séparée de la boucle de gravité (120 FPS d'affichage)",
+      "li2": "Les 7 tétrominos classiques avec rotations",
+      "li3": "Score, niveau et lignes affichés en direct, vitesse de chute progressive"
+    },
+    "todoApp": {
+      "lede": "Application de gestion de tâches moderne et simple à utiliser.",
+      "li1": "Ajouter, modifier, supprimer et marquer des tâches comme terminées",
+      "li2": "Sauvegarde automatique",
+      "li3": "Interface propre et responsive"
+    },
+    "miniBrowser": {
+      "desc": "Un mini-navigateur web développé en Python."
+    }
+  },
+  "footer": {
+    "tagline": "Atelier Xenebia — projets perso, mis à jour au fil de l'eau"
+  }
+}
