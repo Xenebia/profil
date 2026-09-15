@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "games": "Games & Engines",
+    "tools": "Tools",
+    "others": "Mods & Bots",
+    "github": "GitHub Repos"
+  },
+  "hero": {
+    "eyebrow": "workshop log — personal projects",
+    "title": "Xenebia builds his own engines, worlds, and tools.",
+    "lede": "A solo dev workshop: handcrafted 3D engines, RPGs, speedrun tooling, mods and bots. Everything here is code that's been written, broken, fixed, and shipped again.",
+    "stackLabel": "main stack:"
+  },
+  "counts": {
+    "games": "04 projects",
+    "tools": "03 projects",
+    "others": "02 projects",
+    "github": "06 repos"
+  },
+  "status": {
+    "ongoing": "ongoing",
+    "design": "design",
+    "build": "in progress",
+    "done": "done"
+  },
+  "proj": {
+    "kernelError": {
+      "short": "A fully handcrafted 3D FPS engine, no third-party game engine — built brick by brick in Python/PyGame/OpenGL.",
+      "detail": "Extended with RPG systems: XP and leveling, enemies driven by a finite-state machine with wave management, a skill tree, and dash / double-jump mechanics. No third-party engine — 3D rendering, the game loop, and physics are all handwritten."
+    },
+    "rpgPixel": {
+      "short": "A pixel-art hack'n'slash inspired by Greek mythology, separate from Le Dernier Tic.",
+      "detail": "Erebos, the resurrected God of Darkness, faces the Four Primordial Deities (Gaia, Tartarus, Nyx, Eros) across open-world realms. Movement system in place, a four-variant sword combo, a debug menu with toggleable textures, and adjustable screen pixelation. Character: a small witch/reaper with a tall pointed hat, black silhouette, red-trimmed cape."
+    },
+    "dernierTic": {
+      "short": "A steampunk time-manipulation RPG set between the cities of Mécanovie and Horlogia.",
+      "detail": "Four confirmed time powers: slow-down, freeze, location-anchored time jumps, and a visual rewind on death. The opening menu is already prototyped, with a dolly-zoom effect and a LOADING → ZOOM → BLACKOUT → DONE state machine for the fade to black."
+    },
+    "godot": {
+      "short": "A medieval-fantasy 3D RPG with cel-shaded rendering, in the spirit of Zelda and Leadale.",
+      "detail": "Several scene and script errors have already been resolved along the way, including a corrupted World.tscn and mismatched node names."
+    },
+    "leaderboard": {
+      "short": "Speedrun leaderboard syncing by world, level, sub-level, and category.",
+      "detail": "Local SQLite database, with selection by world (Amethyst Ascent, Gusty Glades, Tombstone Tower, Neon Nexus, Challenge Levels), category (Any%, All Leaves, All Berries, Fullberry) and data type. Planned: smart syncing that checks what's already stored before downloading, an offline mode, cancel-mid-sync, and remembering the last settings used."
+    },
+    "launcher": {
+      "short": "A GUI to gather and launch all personal projects from one place.",
+      "detail": "Each project can either open its folder or launch directly, whichever fits. Meant to cover every known project from the start: Godot 3D RPG, KERNEL_ERROR, Image Studio, Le Dernier Tic, Leaderboard Sync, the Minecraft horror mod, the WhatsApp bot."
+    },
+    "imageStudio": {
+      "short": "An image editor combining an AI upscaler with retro filter / pixelation tools.",
+      "detail": "Seven modules (main, app, menu, sidebar, filters, upscaler, theme), with undo/redo, zoom, background processing for upscaling, and a native menu bar. Packaged as a Windows executable via PyInstaller and Inno Setup. The public GitHub repo has its own detailed README — see the GitHub Repos section below."
+    },
+    "minecraft": {
+      "short": "A complete horror mod with a quest and story, on the Fabric loader.",
+      "detail": "Targets version 1.20.1 rather than the latest release. Chosen theme: a haunted forest where an entity stalks the player."
+    },
+    "whatsapp": {
+      "short": "A bot meant to react to commands sent over WhatsApp.",
+      "detail": "Built with whatsapp-web.js and qrcode-terminal. Project structure: botwhatsapp.js, package.json, .wwebjs_auth / .wwebjs_cache folders."
+    }
+  },
+  "repo": {
+    "viewLink": "View repo",
+    "signalPerdu": { "desc": "A horror game, still in development." },
+    "imageStudio": {
+      "lede": "Desktop image editor — AI upscaling, retro filters and pixelation, in one tool.",
+      "li1": "AI upscaling ×2 / ×4 (Real-ESRGAN if available, otherwise Pillow Lanczos)",
+      "li2": "Adjustable pixelation via slider, live rendering",
+      "li3": "7 retro filters: Game Boy, Game Boy Pocket, Game Boy Color, NES, SNES, Mega Drive, CRT",
+      "li4": "Rotate, flip, resize, 11-step zoom, fullscreen",
+      "li5": "Undo/redo history (20 states), recent files"
+    },
+    "radarScan": {
+      "lede": "A graphical network scanner in Java, to be compiled and used within legal bounds.",
+      "li1": "Detects devices on the local network (IP ping)",
+      "li2": "Wi-Fi scanner (SSID + signal strength) via Windows system commands",
+      "li3": "Bluetooth detection via PowerShell",
+      "li4": "Animated radar display with a device list and their status"
+    },
+    "tetris": {
+      "lede": "Tetris in Tkinter, 120 FPS with a wide board (12×30).",
+      "li1": "Render loop decoupled from the gravity loop (120 FPS display)",
+      "li2": "All 7 classic tetrominoes with rotations",
+      "li3": "Live score, level, and line count, with progressive drop speed"
+    },
+    "todoApp": {
+      "lede": "A modern, simple-to-use task manager.",
+      "li1": "Add, edit, delete, and mark tasks as done",
+      "li2": "Automatic saving",
+      "li3": "Clean, responsive interface"
+    },
+    "miniBrowser": { "desc": "A mini web browser built in Python." }
+  },
+  "footer": {
+    "tagline": "Xenebia's workshop — personal projects, updated as they go"
+  }
+}

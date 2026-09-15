@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xenebia — Atelier de projets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14171c;
+    --panel: #1b1f26;
+    --line: #33393f;
+    --ink: #e6e2d6;
+    --muted: #8b93a0;
+    --amber: #e2a23a;
+    --teal: #5aa8a0;
+    --red: #c5654f;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      linear-gradient(var(--bg),var(--bg)),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 48px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 48px);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+
+  header.hero{
+    padding:96px 0 64px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow-line{
+    display:flex; align-items:center; gap:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; color:var(--muted);
+    margin-bottom:28px;
+  }
+  .eyebrow-line .dot{width:7px;height:7px;border-radius:50%;background:var(--teal); flex-shrink:0;}
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(40px, 6vw, 64px);
+    line-height:1.05;
+    margin:0 0 22px;
+    max-width:14ch;
+  }
+  .hero p.lede{
+    max-width:56ch;
+    font-size:18px;
+    color:#c7c2b3;
+    margin:0 0 8px;
+  }
+  .hero .stack-line{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--muted);
+    margin-top:22px;
+  }
+  .stack-line span{color:var(--amber);}
+
+  nav.topbar{
+    position:sticky; top:0; z-index:20;
+    background:rgba(20,23,28,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.topbar .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px;
+  }
+  nav.topbar .brand{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--ink);
+    text-decoration:none;
+  }
+  nav.topbar .links{
+    display:flex; gap:26px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+  }
+  nav.topbar .links a{
+    color:var(--muted);
+    text-decoration:none;
+  }
+  nav.topbar .links a:hover{color:var(--amber);}
+  nav.topbar .links a.gh{color:var(--teal);}
+  .lang-switch{
+    display:flex; border:1px solid var(--line); border-radius:4px; overflow:hidden;
+  }
+  .lang-switch button{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    background:transparent;
+    border:none;
+    color:var(--muted);
+    padding:5px 10px;
+    cursor:pointer;
+  }
+  .lang-switch button + button{border-left:1px solid var(--line);}
+  .lang-switch button.active{color:var(--amber); background:rgba(226,162,58,0.1);}
+  .lang-switch button:hover{color:var(--ink);}
+  nav.topbar .burger{display:none;}
+
+  nav.jump{
+    display:flex; flex-wrap:wrap; gap:0;
+    border-top:1px solid var(--line);
+  }
+  nav.jump a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    text-decoration:none;
+    padding:14px 20px;
+    border-right:1px solid var(--line);
+  }
+  nav.jump a:first-child{padding-left:0;}
+  nav.jump a:hover{color:var(--amber);}
+
+  @media (max-width:640px){
+    nav.topbar .links a{display:none;}
+  }
+
+  section{padding:56px 0;}
+  section + section{border-top:1px solid var(--line);}
+
+  .section-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:36px;
+    gap:16px; flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:28px;
+    margin:0;
+  }
+  .section-head .count{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  .project{
+    border-top:1px solid var(--line);
+  }
+  .project:first-of-type{border-top:none;}
+  .project summary{
+    display:grid;
+    grid-template-columns:150px 1fr 20px;
+    gap:24px;
+    padding:26px 0;
+    cursor:pointer;
+    list-style:none;
+  }
+  .project summary::-webkit-details-marker{display:none;}
+  .project .status{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.02em;
+    color:var(--muted);
+  }
+  .project .status .tag{
+    display:inline-block;
+    padding:3px 8px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    margin-bottom:8px;
+  }
+  .tag.active{color:var(--teal); border-color:var(--teal);}
+  .tag.build{color:var(--amber); border-color:var(--amber);}
+  .tag.design{color:var(--red); border-color:var(--red);}
+
+  .project h3{
+    font-family:'Fraunces', serif;
+    font-size:21px;
+    font-weight:600;
+    margin:0 0 8px;
+  }
+  .project p{
+    margin:0 0 10px;
+    color:#c7c2b3;
+    font-size:15px;
+    max-width:62ch;
+  }
+  .project .meta{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .project .chevron{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--muted);
+    align-self:start;
+    padding-top:4px;
+    transition:transform 0.18s ease;
+  }
+  .project[open] .chevron{transform:rotate(90deg); color:var(--amber);}
+  .project .detail{
+    padding:0 0 30px 174px;
+    color:#c7c2b3;
+    font-size:14.5px;
+  }
+  .project .detail p{max-width:62ch;}
+  @media (max-width:640px){
+    .project summary{grid-template-columns:1fr 20px;}
+    .project .detail{padding-left:0;}
+  }
+
+  .repo-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .repo{
+    background:var(--bg);
+  }
+  .repo summary{
+    padding:20px 24px;
+    cursor:pointer;
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .repo summary::-webkit-details-marker{display:none;}
+  .repo[open]{background:var(--panel);}
+  .repo .repo-name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--ink);
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+  }
+  .repo .repo-name .arrow{
+    color:var(--muted);
+    font-family:'JetBrains Mono',monospace;
+    font-size:16px;
+    transition:transform 0.18s ease;
+  }
+  .repo[open] .repo-name .arrow{transform:rotate(90deg); color:var(--amber);}
+  .repo .repo-meta{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    display:flex; gap:14px;
+  }
+  .repo .lang-dot{
+    width:8px;height:8px;border-radius:50%;
+    display:inline-block; margin-right:6px; vertical-align:middle;
+  }
+  .repo-body{
+    padding:0 24px 22px;
+    font-size:14px;
+    color:#c7c2b3;
+  }
+  .repo-body .readme-lede{
+    color:var(--ink);
+    margin:0 0 12px;
+  }
+  .repo-body p{margin:0 0 12px;}
+  .repo-body ul{
+    margin:0 0 14px;
+    padding-left:18px;
+  }
+  .repo-body li{margin-bottom:6px;}
+  .repo-link{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    text-decoration:none;
+  }
+  .repo-link:hover{color:var(--amber);}
+  @media (max-width:640px){
+    .repo-grid{grid-template-columns:1fr;}
+  }
+
+  .project summary:focus-visible,
+  .repo summary:focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:-2px;
+  }
+
+  footer{
+    padding:48px 0 72px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  @media (max-width:640px){
+    .project{grid-template-columns:1fr;}
+    header.hero{padding:64px 0 40px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">Xenebia</a>
+    <div class="links">
+      <a href="#jeux" data-i18n="nav.games">Jeux &amp; moteurs</a>
+      <a href="#outils" data-i18n="nav.tools">Outils</a>
+      <a href="#autres" data-i18n="nav.others">Mods &amp; bots</a>
+      <a href="#github" data-i18n="nav.github">Dépôts GitHub</a>
+      <a class="gh" href="https://github.com/Xenebia" target="_blank" rel="noopener">github.com/Xenebia ↗</a>
+      <div class="lang-switch" role="group" aria-label="Langue / Language">
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
+  <header class="hero">
+    <div class="eyebrow-line"><span class="dot"></span> <span data-i18n="hero.eyebrow">journal d'atelier — projets perso</span></div>
+    <h1 data-i18n="hero.title">Xenebia construit ses propres moteurs, mondes et outils.</h1>
+    <p class="lede" data-i18n="hero.lede">Un atelier de développement solo : moteurs 3D faits main, RPG, outils de speedrun, mods et bots. Tout est du code écrit, cassé, réparé, puis relancé.</p>
+    <div class="stack-line"><span data-i18n="hero.stackLabel">stack principale :</span> <span>Python</span> · Windows · PyGame/OpenGL · Godot 4.5 · CustomTkinter · Node.js</div>
+  </header>
+
+  <nav class="jump">
+    <a href="#jeux" data-i18n="nav.games">Jeux &amp; moteurs</a>
+    <a href="#outils" data-i18n="nav.tools">Outils</a>
+    <a href="#autres" data-i18n="nav.others">Mods &amp; bots</a>
+    <a href="#github" data-i18n="nav.github">Dépôts GitHub</a>
+  </nav>
+
+  <section id="jeux">
+    <div class="section-head">
+      <h2 data-i18n="nav.games">Jeux &amp; moteurs</h2>
+      <span class="count" data-i18n="counts.games">04 projets</span>
+    </div>
+
+    <details class="project">
+      <summary>
+        <div class="status"><span class="tag active" data-i18n="status.ongoing">en cours</span></div>
+        <div>
+          <h3>KERNEL_ERROR</h3>
+          <p data-i18n="proj.kernelError.short">Moteur FPS 3D entièrement fait main, sans moteur de jeu tiers — construit brique par brique en Python/PyGame/OpenGL.</p>
+          <div class="meta">Python · PyGame · OpenGL</div>
+        </div>
+        <div class="chevron">›</div>
+      </summary>
+      <div class="detail">
+        <p data-i18n="proj.kernelError.detail">Étendu avec des systèmes de RPG : XP et niveaux, ennemis pilotés par une machine à états avec gestion de vagues, arbre de compétences, et mécaniques de dash / double-saut. Aucun moteur tiers — le rendu 3D, la boucle de jeu et la physique sont écrits à la main.</p>
+      </div>
+    </details>
+
+    <details class="project">
+      <summary>
+        <div class="status"><span class="tag active" data-i18n="status.ongoing">en cours</span></div>
+        <div>
+          <h3>RPG pixel-art (Pygame)</h3>
+          <p data-i18n="proj.rpgPixel.short">Hack'n'slash en pixel art inspiré de la mythologie grecque, distinct de Le Dernier Tic.</p>
+          <div class="meta">Python · Pygame</div>
+        </div>
+        <div class="chevron">›</div>
+      </summary>
+      <div class="detail">
+        <p data-i18n="proj.rpgPixel.detail">Erébos, dieu des Ténèbres ressuscité, affronte les Quatre Divinités Primordiales (Gaïa, Tartare, Nyx, Éros) à travers des royaumes en monde ouvert. Système de déplacement en place, combos d'épée à quatre variantes, menu debug avec textures togglables, et pixellisation d'écran paramétrable. Personnage : un petit sorcier/faucheur, silhouette noire à cape liserée de rouge.</p>
+      </div>
+    </details>
+
+    <details class="project">
+      <summary>
+        <div class="status"><span class="tag design" data-i18n="status.design">design</span></div>
+        <div>
+          <h3>Le Dernier Tic</h3>
+          <p data-i18n="proj.dernierTic.short">RPG steampunk de manipulation du temps, entre les cités de Mécanovie et Horlogia.</p>
+          <div class="meta">Python · PyGame · OpenGL</div>
+        </div>
+        <div class="chevron">›</div>
+      </summary>
+      <div class="detail">
+        <p data-i18n="proj.dernierTic.detail">Quatre pouvoirs confirmés : ralentissement, arrêt du temps, sauts temporels ancrés à un lieu, et rembobinage visuel à la mort. Le menu d'ouverture est déjà prototypé, avec un effet dolly-zoom et une machine à états LOADING → ZOOM → BLACKOUT → DONE pour le fondu au noir.</p>
+      </div>
+    </details>
+
+    <details class="project">
+      <summary>
+        <div class="status"><span class="tag build" data-i18n="status.build">construction</span></div>
+        <div>
+          <h3>RPG 3D — Godot</h3>
+          <p data-i18n="proj.godot.short">RPG 3D en fantasy médiévale au rendu cel-shaded, dans l'esprit de Zelda et Leadale.</p>
+          <div class="meta">Godot 4.5</div>
+        </div>
+        <div class="chevron">›</div>
+      </summary>
+      <div class="detail">
+        <p data-i18n="proj.godot.detail">Plusieurs erreurs de scène et de script ont déjà été résolues en cours de route, dont une corruption de World.tscn et des décalages de noms de nœuds.</p>
+      </div>
+    </details>
+  </section>
+
+  <section id="outils">
+    <div class="section-head">
+      <h2 data-i18n="nav.tools">Outils</h2>
+      <span class="count" data-i18n="counts.tools">03 projets</span>
+    </div>
+
+    <details class="project">
+      <summary>
+        <div class="status"><span class="tag build" data-i18n="status.build">construction</span></div>
+        <div>
+          <h3>Leaderboard Sync</h3>
+          <p data-i18n="proj.leaderboard.short">Synchronisation de classements de speedrun par monde, niveau, sous-niveau et catégorie.</p>
+          <div class="meta">Python · SQLite</div>
+        </div>
+        <div class="chevron">›</div>
+      </summary>
+      <div class="detail">
+        <p data-i18n="proj.leaderboard.detail">Base SQLite locale, avec sélection par monde (Amethyst Ascent, Gusty Glades, Tombstone Tower, Neon Nexus, Challenge Levels), catégorie (Any%, All Leaves, All Berries, Fullberry) et type de données. Prévu : synchronisation intelligente qui vérifie les données déjà présentes avant de télécharger, mode hors ligne, annulation en cours de synchronisation, et mémorisation des derniers paramètres utilisés.</p>
+      </div>
+    </details>
+
+    <details class="project">
+      <summary>
+        <div class="status"><span class="tag build" data-i18n="status.build">construction</span></div>
+        <div>
+          <h3>Project Launcher</h3>
+          <p data-i18n="proj.launcher.short">Interface graphique pour rassembler et lancer tous les projets perso depuis un seul endroit.</p>
+          <div class="meta">Python · CustomTkinter</div>
+        </div>
+        <div class="chevron">›</div>
+      </summary>
+      <div class="detail">
+        <p data-i18n="proj.launcher.detail">Chaque projet peut ouvrir son dossier ou se lancer directement, au choix. Doit couvrir dès le départ tous les projets connus : RPG 3D Godot, KERNEL_ERROR, Image Studio, Le Dernier Tic, Leaderboard Sync, mod horror Minecraft, bot WhatsApp.</p>
+      </div>
+    </details>
+
+    <details class="project">
+      <summary>
+        <div class="status"><span class="tag active" data-i18n="status.done">terminé</span></div>
+        <div>
+          <h3>Image Studio</h3>
+          <p data-i18n="proj.imageStudio.short">Éditeur d'images combinant un upscaler par IA et des outils de filtres rétro / pixelisation.</p>
+          <div class="meta">Python · CustomTkinter · PyInstaller</div>
+        </div>
+        <div class="chevron">›</div>
+      </summary>
+      <div class="detail">
+        <p data-i18n="proj.imageStudio.detail">Sept modules (main, app, menu, sidebar, filters, upscaler, theme), avec undo/redo, zoom, traitement en arrière-plan pour l'upscaling, et menu natif. Packagé en exécutable Windows via PyInstaller et Inno Setup. Le dépôt GitHub public a son propre README détaillé — voir la section Dépôts GitHub ci-dessous.</p>
+      </div>
+    </details>
+  </section>
+
+  <section id="autres">
+    <div class="section-head">
+      <h2 data-i18n="nav.others">Mods &amp; bots</h2>
+      <span class="count" data-i18n="counts.others">02 projets</span>
+    </div>
+
+    <details class="project">
+      <summary>
+        <div class="status"><span class="tag design" data-i18n="status.design">design</span></div>
+        <div>
+          <h3>Mod horror — Minecraft</h3>
+          <p data-i18n="proj.minecraft.short">Mod horror complet avec quête et histoire, sous loader Fabric.</p>
+          <div class="meta">Java · Fabric · Minecraft 1.20.1</div>
+        </div>
+        <div class="chevron">›</div>
+      </summary>
+      <div class="detail">
+        <p data-i18n="proj.minecraft.detail">Cible la version 1.20.1 plutôt que la dernière version. Thème retenu : une forêt hantée où une entité traque le joueur.</p>
+      </div>
+    </details>
+
+    <details class="project">
+      <summary>
+        <div class="status"><span class="tag build" data-i18n="status.build">construction</span></div>
+        <div>
+          <h3>Bot WhatsApp</h3>
+          <p data-i18n="proj.whatsapp.short">Bot destiné à réagir à des commandes envoyées sur WhatsApp.</p>
+          <div class="meta">Node.js · whatsapp-web.js</div>
+        </div>
+        <div class="chevron">›</div>
+      </summary>
+      <div class="detail">
+        <p data-i18n="proj.whatsapp.detail">Construit avec whatsapp-web.js et qrcode-terminal. Structure du projet : botwhatsapp.js, package.json, dossiers .wwebjs_auth / .wwebjs_cache.</p>
+      </div>
+    </details>
+  </section>
+
+  <section id="github">
+    <div class="section-head">
+      <h2 data-i18n="nav.github">Dépôts GitHub</h2>
+      <span class="count" data-i18n="counts.github">06 dépôts</span>
+    </div>
+
+    <div class="repo-grid">
+      <details class="repo">
+        <summary>
+          <div class="repo-name">SIGNAL-PERDU <span class="arrow">›</span></div>
+          <div class="repo-meta"><span><span class="lang-dot" style="background:#3572A5;"></span>Python</span><span>2 ★</span></div>
+        </summary>
+        <div class="repo-body">
+          <p data-i18n="repo.signalPerdu.desc">Un jeu d'horreur, encore en développement.</p>
+          <a class="repo-link" href="https://github.com/Xenebia/SIGNAL-PERDU" target="_blank" rel="noopener"><span data-i18n="repo.viewLink">Voir le dépôt</span> ↗</a>
+        </div>
+      </details>
+
+      <details class="repo">
+        <summary>
+          <div class="repo-name">ImageStudio <span class="arrow">›</span></div>
+          <div class="repo-meta"><span><span class="lang-dot" style="background:#3572A5;"></span>Python</span><span>1 ★</span></div>
+        </summary>
+        <div class="repo-body">
+          <p class="readme-lede" data-i18n="repo.imageStudio.lede">Éditeur d'images desktop — Upscaling IA, filtres rétro et pixelisation, dans un seul outil.</p>
+          <ul>
+            <li data-i18n="repo.imageStudio.li1">Upscaling IA ×2 / ×4 (Real-ESRGAN si disponible, sinon Pillow Lanczos)</li>
+            <li data-i18n="repo.imageStudio.li2">Pixelisation réglable par slider, rendu en direct</li>
+            <li data-i18n="repo.imageStudio.li3">7 filtres rétro : Game Boy, Game Boy Pocket, Game Boy Color, NES, SNES, Mega Drive, CRT</li>
+            <li data-i18n="repo.imageStudio.li4">Rotation, retournement, redimensionnement, zoom sur 11 paliers, plein écran</li>
+            <li data-i18n="repo.imageStudio.li5">Historique annuler/rétablir (20 états), fichiers récents</li>
+          </ul>
+          <a class="repo-link" href="https://github.com/Xenebia/ImageStudio" target="_blank" rel="noopener"><span data-i18n="repo.viewLink">Voir le dépôt</span> ↗</a>
+        </div>
+      </details>
+
+      <details class="repo">
+        <summary>
+          <div class="repo-name">Radar-Scan <span class="arrow">›</span></div>
+          <div class="repo-meta"><span><span class="lang-dot" style="background:#b07219;"></span>Java</span><span>2 ★</span></div>
+        </summary>
+        <div class="repo-body">
+          <p class="readme-lede" data-i18n="repo.radarScan.lede">Scanner réseau graphique en Java, à compiler et utiliser dans un cadre légal.</p>
+          <ul>
+            <li data-i18n="repo.radarScan.li1">Détection des appareils du réseau local (ping IP)</li>
+            <li data-i18n="repo.radarScan.li2">Scanner Wi-Fi (SSID + puissance) via commandes système Windows</li>
+            <li data-i18n="repo.radarScan.li3">Détection Bluetooth via PowerShell</li>
+            <li data-i18n="repo.radarScan.li4">Radar graphique animé avec liste des appareils et leur état</li>
+          </ul>
+          <a class="repo-link" href="https://github.com/Xenebia/Radar-Scan" target="_blank" rel="noopener"><span data-i18n="repo.viewLink">Voir le dépôt</span> ↗</a>
+        </div>
+      </details>
+
+      <details class="repo">
+        <summary>
+          <div class="repo-name">Tetris <span class="arrow">›</span></div>
+          <div class="repo-meta"><span><span class="lang-dot" style="background:#3572A5;"></span>Python</span><span>1 ★</span></div>
+        </summary>
+        <div class="repo-body">
+          <p class="readme-lede" data-i18n="repo.tetris.lede">Tetris en Tkinter, 120 FPS et plateau large (12×30).</p>
+          <ul>
+            <li data-i18n="repo.tetris.li1">Boucle de rendu séparée de la boucle de gravité (120 FPS d'affichage)</li>
+            <li data-i18n="repo.tetris.li2">Les 7 tétrominos classiques avec rotations</li>
+            <li data-i18n="repo.tetris.li3">Score, niveau et lignes affichés en direct, vitesse de chute progressive</li>
+          </ul>
+          <a class="repo-link" href="https://github.com/Xenebia/Tetris" target="_blank" rel="noopener"><span data-i18n="repo.viewLink">Voir le dépôt</span> ↗</a>
+        </div>
+      </details>
+
+      <details class="repo">
+        <summary>
+          <div class="repo-name">Todo-App <span class="arrow">›</span></div>
+          <div class="repo-meta"><span><span class="lang-dot" style="background:#f1e05a;"></span>JavaScript</span><span>2 ★</span></div>
+        </summary>
+        <div class="repo-body">
+          <p class="readme-lede" data-i18n="repo.todoApp.lede">Application de gestion de tâches moderne et simple à utiliser.</p>
+          <ul>
+            <li data-i18n="repo.todoApp.li1">Ajouter, modifier, supprimer et marquer des tâches comme terminées</li>
+            <li data-i18n="repo.todoApp.li2">Sauvegarde automatique</li>
+            <li data-i18n="repo.todoApp.li3">Interface propre et responsive</li>
+          </ul>
+          <a class="repo-link" href="https://github.com/Xenebia/Todo-App" target="_blank" rel="noopener"><span data-i18n="repo.viewLink">Voir le dépôt</span> ↗</a>
+        </div>
+      </details>
+
+      <details class="repo">
+        <summary>
+          <div class="repo-name">mini_brower_v.tk <span class="arrow">›</span></div>
+          <div class="repo-meta"><span><span class="lang-dot" style="background:#3572A5;"></span>Python</span></div>
+        </summary>
+        <div class="repo-body">
+          <p data-i18n="repo.miniBrowser.desc">Un mini-navigateur web développé en Python.</p>
+          <a class="repo-link" href="https://github.com/Xenebia/mini_brower_v.tk" target="_blank" rel="noopener"><span data-i18n="repo.viewLink">Voir le dépôt</span> ↗</a>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <span data-i18n="footer.tagline">Atelier Xenebia — projets perso, mis à jour au fil de l'eau</span>
+    <a href="https://github.com/Xenebia" target="_blank" rel="noopener" style="color:var(--muted);">github.com/Xenebia</a>
+  </footer>
+</div>
+
+<script>
+// --- Système de langue : charge lang/fr.json ou lang/en.json ---
+// Repli intégré si le fichier est ouvert en local (file://) sans serveur,
+// où fetch() sur un fichier JSON peut être bloqué par le navigateur.
+const I18N_FALLBACK = {
+  fr: null, // rempli automatiquement si besoin, voir plus bas
+  en: null
+};
+
+function getNested(obj, path) {
+  return path.split('.').reduce((o, k) => (o && o[k] !== undefined) ? o[k] : null, obj);
+}
+
+function applyTranslations(dict) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const value = getNested(dict, key);
+    if (value) el.textContent = value;
+  });
+  document.documentElement.lang = currentLang;
+}
+
+let currentLang = 'fr';
+const cache = {};
+
+async function loadLang(lang) {
+  if (cache[lang]) {
+    applyTranslations(cache[lang]);
+    setActiveButton(lang);
+    currentLang = lang;
+    localStorage.setItem('site-lang', lang);
+    return;
+  }
+  try {
+    const res = await fetch(`lang/${lang}.json`);
+    if (!res.ok) throw new Error('fichier introuvable');
+    const dict = await res.json();
+    cache[lang] = dict;
+    applyTranslations(dict);
+    setActiveButton(lang);
+    currentLang = lang;
+    localStorage.setItem('site-lang', lang);
+  } catch (err) {
+    console.warn(`Impossible de charger lang/${lang}.json (probablement ouvert en file:// sans serveur local). Détail :`, err);
+    console.warn('Astuce : lancez un petit serveur local (ex: "python -m http.server") dans le dossier du site pour que le fetch() fonctionne.');
+  }
+}
+
+function setActiveButton(lang) {
+  document.querySelectorAll('.lang-switch button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+}
+
+document.querySelectorAll('.lang-switch button').forEach(btn => {
+  btn.addEventListener('click', () => loadLang(btn.dataset.lang));
+});
+
+// Langue de départ : préférence sauvegardée > langue du navigateur > français par défaut
+const savedLang = localStorage.getItem('site-lang');
+const browserLang = navigator.language.slice(0, 2);
+const startLang = savedLang || (browserLang === 'en' ? 'en' : 'fr');
+loadLang(startLang);
+</script>
+</body>
+</html>
